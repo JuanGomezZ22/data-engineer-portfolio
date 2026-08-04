@@ -1,0 +1,30 @@
+# Entornos virtuales
+venv/
+__pycache__/
+*.pyc
+
+# Variables de entorno y credenciales
+.env
+*.json
+!package.json
+
+# Credenciales de GCP (nunca deben subirse)
+*-key.json
+service-account*.json
+
+# Datos pesados (no versionamos datasets grandes en Git)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+
+# Sistema
+.DS_Store

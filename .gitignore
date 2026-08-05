@@ -28,3 +28,4 @@ terraform/*.tfstate.backup
 
 # Sistema
 .DS_Store
+venv-spark/

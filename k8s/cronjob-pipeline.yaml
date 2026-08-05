@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: clima-pipeline-cron
+spec:
+  schedule: "*/3 * * * *"
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          containers:
+            - name: clima-pipeline
+              image: clima-el-nino:latest
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - configMapRef:
+                    name: clima-config
+          restartPolicy: Never

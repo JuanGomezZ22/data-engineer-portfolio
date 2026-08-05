@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: clima-config
+data:
+  FECHA_INICIO: "2015-01-01"
+  FECHA_FIN: "2023-12-31"

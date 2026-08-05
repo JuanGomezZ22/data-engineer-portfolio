@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: clima-pipeline-job-v2
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      containers:
+        - name: clima-pipeline
+          image: clima-el-nino:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: clima-config
+            - secretRef:
+                name: clima-secret-demo
+          volumeMounts:
+            - name: datos
+              mountPath: /app/data
+      restartPolicy: Never
+      volumes:
+        - name: datos
+          persistentVolumeClaim:
+            claimName: clima-datos-pvc

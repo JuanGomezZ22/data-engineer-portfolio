@@ -1,3 +1,4 @@
+import os
 from datetime import date
 from weather_extractor import WeatherExtractor
 from weather_transformer import WeatherTransformer
@@ -11,8 +12,11 @@ CIUDADES = {
     "lima": {"lat": -12.05, "lon": -77.04},
 }
 
+FECHA_INICIO = os.environ.get("FECHA_INICIO", "2010-01-01")
+FECHA_FIN = os.environ.get("FECHA_FIN", date.today().isoformat())
+
 if __name__ == "__main__":
-    extractor = WeatherExtractor(CIUDADES, "2010-01-01", date.today().isoformat())
+    extractor = WeatherExtractor(CIUDADES, FECHA_INICIO, FECHA_FIN)
     extractor.ejecutar()
 
     transformer = WeatherTransformer()

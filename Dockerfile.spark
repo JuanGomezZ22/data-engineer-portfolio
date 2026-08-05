@@ -1,0 +1,32 @@
+# ---------- ETAPA 1: builder ----------
+FROM python:3.11-slim AS builder
+
+# build-essential por si alguna dependencia necesita compilar --
+# no importa si al final no se usa: esta etapa completa se descarta despues.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY requirements-spark.txt .
+RUN pip install --no-cache-dir -r requirements-spark.txt
+
+# ---------- ETAPA 2: runtime (esta es la imagen final) ----------
+FROM python:3.11-slim
+
+# JRE (runtime), no JDK completo -- no vamos a compilar Java, solo ejecutar Spark
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    default-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiamos SOLO el entorno virtual ya armado desde la etapa builder.
+# build-essential y todo el cache de pip de la etapa 1 nunca llegan aqui.
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+WORKDIR /app
+COPY scripts/spark_join.py ./scripts/spark_join.py
+
+CMD ["python", "scripts/spark_join.py"]

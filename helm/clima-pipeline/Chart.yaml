@@ -1,0 +1,5 @@
+apiVersion: v2
+name: clima-pipeline
+description: Chart para el pipeline de datos climaticos El Nino
+version: 0.1.0
+appVersion: "1.0.0"

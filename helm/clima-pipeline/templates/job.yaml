@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-job
+spec:
+  backoffLimit: {{ .Values.backoffLimit }}
+  template:
+    spec:
+      containers:
+        - name: clima-pipeline
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: FECHA_INICIO
+              value: "{{ .Values.fechaInicio }}"
+            - name: FECHA_FIN
+              value: "{{ .Values.fechaFin }}"
+      restartPolicy: Never

@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  pipeline:
+    build: .
+    container_name: clima-pipeline
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=clima_db
+      - DB_USER=clima_user
+      - DB_PASSWORD=clima_pass
+    networks:
+      - red_clima
+
+  db:
+    image: postgres:16-alpine
+    container_name: clima-postgres
+    environment:
+      - POSTGRES_DB=clima_db
+      - POSTGRES_USER=clima_user
+      - POSTGRES_PASSWORD=clima_pass
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - red_clima
+
+volumes:
+  datos_postgres:
+
+networks:
+  red_clima:
+    driver: bridge

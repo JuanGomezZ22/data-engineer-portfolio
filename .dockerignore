@@ -1,0 +1,10 @@
+venv/
+venv-spark/
+data/
+.git/
+__pycache__/
+*.pyc
+.env
+.ipynb_checkpoints/
+sql/
+*.md

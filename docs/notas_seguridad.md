@@ -1,0 +1,1 @@
+# Nota: el pipeline usa la Service Account clima-pipeline-sa (rol minimo: storage.objectAdmin en el bucket, bigquery.dataEditor + jobUser a nivel proyecto). La clave vive en ~/clima-pipeline-sa-key.json, fuera del repo.
